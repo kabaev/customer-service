@@ -2,40 +2,89 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.kabaev.shop</groupId>
+	<artifactId>customer-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>customer-service</name>
+	<description>AWS mentoring project</description>
+	<packaging>pom</packaging>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.8</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.kabaev.shop</groupId>
-	<artifactId>customer-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>customer-service</name>
-	<description>AWS mentoring project</description>
-	<properties>
-		<java.version>17</java.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<properties>
+		<lombok.version>1.18.22</lombok.version>
+		<awssdk.version>2.17.121</awssdk.version>
+
+		<cdk.version>2.8.0</cdk.version>
+		<constructs.version>[10.0.0,11.0.0)</constructs.version>
+		<junit.version>5.8.2</junit.version>
+	</properties>
+
+	<modules>
+		<module>customer-service-app</module>
+		<module>customer-service-infrastructure</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>s3</artifactId>
+				<version>${awssdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>sqs</artifactId>
+				<version>${awssdk.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>software.amazon.awscdk</groupId>
+				<artifactId>aws-cdk-lib</artifactId>
+				<version>${cdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>software.constructs</groupId>
+				<artifactId>constructs</artifactId>
+				<version>${constructs.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<from>
+						<image>openjdk:11</image>
+					</from>
+					<container>
+						<ports>
+							<port>8080</port>
+						</ports>
+						<format>OCI</format>
+					</container>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
