@@ -163,3 +163,146 @@ paths:
                 type: boolean
       tags:
         - OrderController
+
+  /search/products/:
+
+    get:
+      tags:
+        - SearchController
+      summary: Returns all products by using filters
+      parameters:
+        - name: page
+          description: The page number
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          description: The page size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: sortBy
+          description: The field by which to sort
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sortOrder
+          description: Ascending or Descending order
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+        '500':
+          description: Unexpected exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ExceptionResponseDto'
+
+  /search/products/{code}:
+
+    get:
+      tags:
+        - SearchController
+      summary: Returns product with given code
+      parameters:
+        - name: code
+          description: The code of the product
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ExceptionResponseDto'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ExceptionResponseDto'
+        '500':
+          description: Unexpected exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ExceptionResponseDto'
+
+components:
+  schemas:
+
+    ProductDto:
+      type: object
+      required:
+        - code
+        - name
+        - description
+        - price
+      properties:
+        code:
+          description: Unique code of the Product
+          example: 7dd7360f-af3f-42a2-8615-b11dc7b69b2b
+          type: string
+        name:
+          description: Unique name of the Product
+          type: string
+          example: AMD Ryzen 7 PRO 5750G, SocketAM4, OEM
+        description:
+          description: Full description of the Product
+          type: string
+          example: General Specifications
+        price:
+          description: Price of the Product
+          type: integer
+          example: 500
+        images:
+          description: List of imageURLs
+          type: array
+          items:
+            type: string
+
+  responses:
+
+    ExceptionResponseDto:
+      description: Unified Exception Response DTO
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - timestamp
+            properties:
+              message:
+                type: string
+              timestamp:
+                type: string
+                format: 'date-time'
+              stackTrace:
+                type: array
+                items:
+                  type: string
