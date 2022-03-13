@@ -1,39 +1,41 @@
 package com.kabaev.shop.service.customer.domain;
 
+import com.kabaev.shop.service.customer.dto.ProductDto;
+import com.kabaev.shop.service.customer.helper.Indices;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Setting;
+
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-
+@Document(indexName = Indices.PERSON_INDEX)
+@Setting(settingPath = "static/es-settings.json")
 public class Product {
 
-    private Long id;
+    @Id
+    @Field(type = FieldType.Keyword)
     private String code;
+    @Field(type = FieldType.Text)
     private String name;
+    @Field(type = FieldType.Text)
     private String description;
+    @Field(type = FieldType.Long)
     private BigDecimal price;
-    private List<Image> images;
+    @Field(type = FieldType.Text)
+    private List<String> images;
 
-    public void addImageToProduct(Image image) {
-        if (images == null) {
-            images = new ArrayList<>();
-        }
-        images.add(image);
+    public Product() {
     }
 
-    public List<String> getImageUriList() {
-        return images == null
-                ? new ArrayList<>()
-                : images.stream().map(Image::getUri).toList();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Product(ProductDto productDto) {
+        this.code = productDto.code();
+        this.name = productDto.name();
+        this.description = productDto.description();
+        this.price = productDto.price();
+        this.images = productDto.imageUriList();
     }
 
     public String getCode() {
@@ -68,19 +70,18 @@ public class Product {
         this.price = price;
     }
 
-    public List<Image> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
+                "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
