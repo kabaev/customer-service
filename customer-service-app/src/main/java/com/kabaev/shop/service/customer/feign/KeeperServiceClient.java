@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "keeperService", url = "http://localhost:8080/api/v1/products")
+@FeignClient(name = "keeperService", url = "${keeper.service.url}")
 public interface KeeperServiceClient {
 
     @GetMapping
