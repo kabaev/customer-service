@@ -11,7 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Document(indexName = Indices.PERSON_INDEX)
+@Document(indexName = Indices.PRODUCT_INDEX)
 @Setting(settingPath = "static/es-settings.json")
 public class Product {
 
@@ -24,6 +24,8 @@ public class Product {
     private String description;
     @Field(type = FieldType.Long)
     private BigDecimal price;
+    @Field(type = FieldType.Boolean)
+    private boolean isDeleted;
     @Field(type = FieldType.Text)
     private List<String> images;
 
@@ -35,6 +37,7 @@ public class Product {
         this.name = productDto.name();
         this.description = productDto.description();
         this.price = productDto.price();
+        this.isDeleted = productDto.isDeleted();
         this.images = productDto.imageUriList();
     }
 
@@ -70,6 +73,14 @@ public class Product {
         this.price = price;
     }
 
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
     public List<String> getImages() {
         return images;
     }
@@ -85,6 +96,7 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", isDeleted=" + isDeleted +
                 ", images=" + images +
                 '}';
     }
