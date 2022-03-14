@@ -44,7 +44,7 @@ public class ProductUpdateScheduler {
                 elasticSearchRepository.save(new Product(productByCode));
                 sqsUpdater.cleanQueue(messages);
             } catch (JsonProcessingException e) {
-                log.error("Unable to parse messages", e);
+                log.error("Unable to parse message with messageId: " + message.messageId(), e);
             }
         });
     }

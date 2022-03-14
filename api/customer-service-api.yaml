@@ -8,161 +8,161 @@ servers:
 
 paths:
 
-  /carts/{customerId}:
-
-    get:
-      summary: Returns the customer's cart
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully returned cart
-          content:
-            application/json:
-              schema:
-                type: object
-      tags:
-        - CartController
-
-    delete:
-      summary: Deletes the customer's cart
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully deleted cart
-          content:
-            application/json:
-              schema:
-                type: boolean
-      tags:
-        - CartController
-
-  /carts/{customerId}/{productId}:
-
-    put:
-      summary: Adds the product to the customer's cart
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully added product
-          content:
-            application/json:
-              schema:
-                type: object
-      tags:
-        - CartController
-
-    delete:
-      summary: Deletes the product from the customer's cart
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully deleted product
-          content:
-            application/json:
-              schema:
-                type: boolean
-      tags:
-        - CartController
-
-  /orders/{customerId}:
-
-    get:
-      summary: Returns the customer's orders
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully returned orders
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-      tags:
-        - OrderController
-
-    post:
-      summary: Creates the customer's new order
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: cart
-          in: query
-          description: Cart filled by the customer
-          schema:
-            type: object
-      responses:
-        '200':
-          description: Successfully returned orders
-          content:
-            application/json:
-              schema:
-                type: object
-      tags:
-        - OrderController
-
-  /orders/{customerId}/{orderId}:
-
-    delete:
-      summary: Deletes the order from the customer's order list
-      parameters:
-        - name: customerId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: orderId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully deleted order
-          content:
-            application/json:
-              schema:
-                type: boolean
-      tags:
-        - OrderController
+#  /carts/{customerId}:
+#
+#    get:
+#      summary: Returns the customer's cart
+#      parameters:
+#        - name: customerId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successfully returned cart
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#      tags:
+#        - CartController
+#
+#    delete:
+#      summary: Deletes the customer's cart
+#      parameters:
+#        - name: customerId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successfully deleted cart
+#          content:
+#            application/json:
+#              schema:
+#                type: boolean
+#      tags:
+#        - CartController
+#
+#  /carts/{customerId}/{productId}:
+#
+#    put:
+#      summary: Adds the product to the customer's cart
+#      parameters:
+#        - name: customerId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successfully added product
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#      tags:
+#        - CartController
+#
+#    delete:
+#      summary: Deletes the product from the customer's cart
+#      parameters:
+#        - name: customerId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successfully deleted product
+#          content:
+#            application/json:
+#              schema:
+#                type: boolean
+#      tags:
+#        - CartController
+#
+#  /orders/{customerId}:
+#
+#    get:
+#      summary: Returns the customer's orders
+#      parameters:
+#        - name: customerId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successfully returned orders
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  type: object
+#      tags:
+#        - OrderController
+#
+#    post:
+#      summary: Creates the customer's new order
+#      parameters:
+#        - name: customerId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#        - name: cart
+#          in: query
+#          description: Cart filled by the customer
+#          schema:
+#            type: object
+#      responses:
+#        '200':
+#          description: Successfully returned orders
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#      tags:
+#        - OrderController
+#
+#  /orders/{customerId}/{orderId}:
+#
+#    delete:
+#      summary: Deletes the order from the customer's order list
+#      parameters:
+#        - name: customerId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#        - name: orderId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successfully deleted order
+#          content:
+#            application/json:
+#              schema:
+#                type: boolean
+#      tags:
+#        - OrderController
 
   /search/products/:
 
