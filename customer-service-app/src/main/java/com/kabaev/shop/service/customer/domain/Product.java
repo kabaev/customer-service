@@ -25,7 +25,7 @@ public class Product {
     @Field(type = FieldType.Long)
     private BigDecimal price;
     @Field(type = FieldType.Boolean)
-    private boolean isDeleted;
+    private boolean deleted;
     @Field(type = FieldType.Text)
     private List<String> images;
 
@@ -37,7 +37,7 @@ public class Product {
         this.name = productDto.name();
         this.description = productDto.description();
         this.price = productDto.price();
-        this.isDeleted = productDto.isDeleted();
+        this.deleted = productDto.deleted();
         this.images = productDto.imageUriList();
     }
 
@@ -74,11 +74,11 @@ public class Product {
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
     }
 
     public List<String> getImages() {
@@ -96,7 +96,7 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", isDeleted=" + isDeleted +
+                ", deleted=" + deleted +
                 ", images=" + images +
                 '}';
     }

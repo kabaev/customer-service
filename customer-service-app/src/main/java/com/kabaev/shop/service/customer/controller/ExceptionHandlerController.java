@@ -1,6 +1,7 @@
 package com.kabaev.shop.service.customer.controller;
 
 import com.kabaev.shop.service.customer.dto.ExceptionResponseDto;
+import com.kabaev.shop.service.customer.exception.ProductNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,15 @@ import java.util.UUID;
 @RestControllerAdvice
 @Slf4j
 public class ExceptionHandlerController {
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDto> handleProductNotFoundException(Exception e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(
+                new ExceptionResponseDto(e.getMessage(), LocalDateTime.now()),
+                HttpStatus.NOT_FOUND
+        );
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDto> handleUnexpectedExceptions(
