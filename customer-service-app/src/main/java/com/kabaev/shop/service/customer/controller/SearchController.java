@@ -3,13 +3,11 @@ package com.kabaev.shop.service.customer.controller;
 import com.kabaev.shop.service.customer.domain.Product;
 import com.kabaev.shop.service.customer.dto.ProductDto;
 import com.kabaev.shop.service.customer.dto.ProductDtoList;
-import com.kabaev.shop.service.customer.exception.ProductNotFoundException;
+import com.kabaev.shop.service.customer.dto.SearchRequestDto;
 import com.kabaev.shop.service.customer.repository.ElasticSearchRepository;
+import com.kabaev.shop.service.customer.service.SearchService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +18,13 @@ import java.util.List;
 public class SearchController {
 
     private final ElasticSearchRepository elasticSearchRepository;
+    private final SearchService searchService;
 
-    public SearchController(ElasticSearchRepository elasticSearchRepository) {
+    public SearchController(
+            ElasticSearchRepository elasticSearchRepository,
+            SearchService searchService) {
         this.elasticSearchRepository = elasticSearchRepository;
+        this.searchService = searchService;
     }
 
     @GetMapping
@@ -37,11 +39,13 @@ public class SearchController {
     }
 
     @GetMapping("/{code}")
-    public ProductDto getProductByCode(@PathVariable("code") String code) {
-        log.debug("Returning product with code = {}", code);
-        Product product = elasticSearchRepository.findByCode(code)
-                .orElseThrow(() -> new ProductNotFoundException("There is no product with the code: " + code));
-        return new ProductDto(product);
+    public ProductDto getProductByCode(@PathVariable final String code) {
+        return searchService.getProductByCode(code);
+    }
+
+    @PostMapping("/filter")
+    public List<ProductDto> searchWithFilter(@RequestBody final SearchRequestDto dto) {
+        return searchService.search(dto);
     }
 
 }
